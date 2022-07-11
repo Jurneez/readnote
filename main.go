@@ -5,24 +5,15 @@ import (
 	"tool/readnote/common"
 	"tool/readnote/config"
 	"tool/readnote/mysql"
-
-	"github.com/BurntSushi/toml"
 	// "github.com/Jurneez/goutils/slice"
 )
 
 func init() {
-	// config.InitConf()
-	var err error
-	var conf config.Config
-	_, err = toml.DecodeFile("./config/config.toml", &conf)
-	if err != nil {
-		fmt.Println(err.Error())
-		return
-	}
-
-	fmt.Printf("%+v \n", conf)
+	config.LoadConfig("./config/config.toml")
+	fmt.Printf("%+v \n", config.Conf.Mysql["test"])
 
 	// 链接数据库
+	var err error
 	common.Db, err = mysql.ConnectMysql()
 	if err != nil {
 		fmt.Println(err.Error())

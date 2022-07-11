@@ -13,9 +13,10 @@ type Customer struct {
 
 }
 
-type CustomerHistory struct {
-	Id         uint `db:"id"`
-	CustomerId uint `db:"customer_id"` // 用户ID
-	StartTime  uint `db:"start_time"`  // 登陆开始时间
-	EndTime    uint `db:"end_time"`    // 登陆结束时间
+type CustomerLoginHistory struct {
+	Id         uint   `db:"id"`
+	CustomerId uint   `db:"customer_id"` // 用户ID
+	StartTime  uint   `db:"start_time"`  // 登陆开始时间
+	EndTime    uint   `db:"end_time"`    // 登陆结束时间
+	LoginIp    string `db:"login_ip"`    // 在此之间用户所在IP
 }

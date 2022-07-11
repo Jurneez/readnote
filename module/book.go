@@ -1,6 +1,6 @@
 package module
 
-type file struct {
+type File struct {
 	id         uint   `db:"id"`
 	order      uint   `db:"order"`
 	name       string `db:"name"`

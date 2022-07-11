@@ -12,13 +12,16 @@ func init() {
 	config.LoadConfig("./config/config.toml")
 	fmt.Printf("%+v \n", config.Conf.Mysql["test"])
 
+	// 读取sql文件中的数据
 	// 链接数据库
 	var err error
-	common.Db, err = mysql.ConnectMysql()
+	mysqlTest := config.Conf.Mysql["test"]
+	common.Db, err = mysql.ConnectMysql(mysqlTest.Host, mysqlTest.Port, mysqlTest.UserName, mysqlTest.Password, "test")
 	if err != nil {
 		fmt.Println(err.Error())
 		return
 	}
+	mysql.Exec("./sql/file.sql")
 }
 
 func main() {

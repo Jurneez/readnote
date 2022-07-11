@@ -49,3 +49,5 @@ func (db *DB) Execx(path string) {
 		panic(err)
 	}
 }
+
+// 补充增删改查接口

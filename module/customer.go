@@ -9,7 +9,7 @@ type Customer struct {
 	RegisterTime uint   `db:"register_time"` // 注册时间
 	UserName     string `db:"user_name"`     // 用户名
 	Password     string `db:"password"`      // 密码
-	IsJu         uint   `db:"is_ju"`         //  是否游客用户，0-注册用户，1-游客用户
+	IsTourist    uint   `db:"is_tourist"`    //  是否游客用户，0-注册用户，1-游客用户
 
 }
 

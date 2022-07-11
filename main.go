@@ -2,9 +2,7 @@ package main
 
 import (
 	"fmt"
-	"tool/readnote/common"
 	"tool/readnote/config"
-	"tool/readnote/log"
 	"tool/readnote/mysql"
 	// "github.com/Jurneez/goutils/slice"
 )
@@ -13,18 +11,12 @@ func init() {
 	config.LoadConfig("./config/config.toml")
 	fmt.Printf("%+v \n", config.Conf.Mysql["test"])
 
-	log.Write("log.txt", "1223")
-	log.Write("log.txt", "122xx3")
 	// 读取sql文件中的数据
 	// 链接数据库
-	var err error
+	testDB := mysql.NewDB()
 	mysqlTest := config.Conf.Mysql["test"]
-	common.Db, err = mysql.ConnectMysql(mysqlTest.Host, mysqlTest.Port, mysqlTest.UserName, mysqlTest.Password, "test")
-	if err != nil {
-		fmt.Println(err.Error())
-		return
-	}
-	mysql.Exec("./sql/file.sql")
+	testDB.Connect(mysqlTest.Host, mysqlTest.Port, mysqlTest.UserName, mysqlTest.Password, "test")
+	testDB.Exec("./sql/file.sql")
 }
 
 func main() {

@@ -16,6 +16,11 @@ func init() {
 }
 
 func login(w http.ResponseWriter, r *http.Request) {
+	// 限制post类型
+	if r.Method != "POST" {
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
 	result := response.Common{
 		Code:    1,
 		Message: "login",

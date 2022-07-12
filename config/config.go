@@ -30,7 +30,6 @@ func LoadConfig(filePath string) (err error) {
 			fmt.Println(err.Error())
 			return
 		}
-
 	})
 
 	return

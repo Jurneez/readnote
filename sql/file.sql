@@ -1,5 +1,5 @@
 create table `file`(
-	`id` int(11) unsigned NOT NULL AUTO_INCREMENT comment'自增ID',
+	  `id` int(11) unsigned NOT NULL AUTO_INCREMENT comment'自增ID',
     `order` int(11) unsigned NOT NULL DEFAULT 1 comment'排序',
     `name` varchar(64) NOT NULL DEFAULT "" comment'文件名字',
     `ftype` varchar(10) not null DEFAULT "" comment'文件类型，pdf,txt等',

@@ -10,7 +10,10 @@ type Customer struct {
 	UserName     string `db:"user_name"`     // 用户名
 	Password     string `db:"password"`      // 密码
 	IsTourist    uint   `db:"is_tourist"`    //  是否游客用户，0-注册用户，1-游客用户
+}
 
+func (c Customer) TableName() string {
+	return "customer"
 }
 
 type CustomerLoginHistory struct {
@@ -19,4 +22,8 @@ type CustomerLoginHistory struct {
 	StartTime  uint   `db:"start_time"`  // 登陆开始时间
 	EndTime    uint   `db:"end_time"`    // 登陆结束时间
 	LoginIp    string `db:"login_ip"`    // 在此之间用户所在IP
+}
+
+func (c CustomerLoginHistory) TableName() string {
+	return "customer_login_history"
 }

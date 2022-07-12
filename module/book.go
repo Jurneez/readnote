@@ -7,6 +7,10 @@ type DicTag struct {
 	CreateTime string `db:"create_time"`
 }
 
+func (d DicTag) TableName() string {
+	return "dic_tag"
+}
+
 type File struct {
 	Id         uint   `db:"id"`
 	Order      uint   `db:"order"`
@@ -20,12 +24,20 @@ type File struct {
 	UpdateTime string `db:"update_time"`
 }
 
+func (f File) TableName() string {
+	return "file"
+}
+
 type MapFileTag struct {
 	Id         uint   `db:"id"`
 	TagId      uint   `db:"tag_id"`
 	FileId     uint   `db:"file_id"`
 	Status     uint   `db:"status"` // 0-添加 1-删除
 	CreateTime string `db:"create_time"`
+}
+
+func (m MapFileTag) TableName() string {
+	return "map_file_tag"
 }
 
 type Note struct {
@@ -37,4 +49,8 @@ type Note struct {
 	OrderId    uint   `db:"order_id"`    // 笔记的顺序，返回数据的时候按照orderId排序，会变
 	CreateTime string `db:"create_time"` // 笔记时间
 	UpdateTime string `db:"update_time"` // 笔记修改时间
+}
+
+func (n Note) TableName() string {
+	return "note"
 }

@@ -5,3 +5,5 @@
     3. 记录笔记，可以精确定位书中笔记位置
     4. customer+book+chapter生成笔记文档
 
+这是一个工具
+This is a tool for write what are you thinking when reading。

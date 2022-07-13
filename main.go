@@ -5,6 +5,8 @@ import (
 	"io/ioutil"
 	"net/http"
 	"os"
+	"path/filepath"
+	"strconv"
 	"tool/readnote/common"
 	"tool/readnote/config"
 	"tool/readnote/mysql"
@@ -78,6 +80,13 @@ func fileHandle(w http.ResponseWriter, r *http.Request) {
 		}
 		response.SetResponseJsonWrite(w, result)
 	}
+
+	ext := filepath.Ext(path)
+	if contentType := common.ExtensionToContentType[ext]; contentType != "" {
+		w.Header().Set("Content-Type", contentType)
+	}
+	w.Header().Set("Content-Length", strconv.FormatInt(d.Size(), 10))
+
 	w.Write(data)
 
 }

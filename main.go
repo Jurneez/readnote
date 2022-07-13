@@ -113,6 +113,11 @@ func uploadFile(w http.ResponseWriter, r *http.Request) {
 		}
 		defer f.Close()
 		io.Copy(f, file)
+		fmt.Println("upload file sucess")
+
+		// into read-page
+		url := fmt.Sprintf("/file_resource/%s", handler.Filename)
+		http.Redirect(w, r, url, http.StatusFound)
 	} else {
 		response.SetResponseJsonWrite(w, response.Common{
 			Code:    -1,

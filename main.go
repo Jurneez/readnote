@@ -1,8 +1,8 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"net/http"
 	"os"
 	"tool/readnote/common"
@@ -48,15 +48,37 @@ func fileHandle(w http.ResponseWriter, r *http.Request) {
 			Code:    -1,
 			Message: err.Error(),
 		}
-		// 将数据json化，返回json格式的数据
-		res, err := json.Marshal(result)
-		if err != nil {
-			return
+		response.SetResponseJsonWrite(w, result)
+	}
+	defer f.Close()
+
+	d, err := f.Stat()
+	if err != nil {
+		result := response.Common{
+			Code:    -1,
+			Message: err.Error(),
 		}
-		w.Write(res)
+		response.SetResponseJsonWrite(w, result)
 	}
 
-	defer f.Close()
+	// 判断该路径是否是一个文件夹
+	if d.IsDir() {
+		result := response.Common{
+			Code:    -1,
+			Message: "error dir",
+		}
+		response.SetResponseJsonWrite(w, result)
+	}
+
+	data, err := ioutil.ReadAll(f)
+	if err != nil {
+		result := response.Common{
+			Code:    -1,
+			Message: err.Error(),
+		}
+		response.SetResponseJsonWrite(w, result)
+	}
+	w.Write(data)
 
 }
 

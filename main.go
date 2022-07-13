@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"os"
 	"tool/readnote/common"
 	"tool/readnote/config"
 	"tool/readnote/mysql"
@@ -26,22 +27,43 @@ func init() {
 
 func login(w http.ResponseWriter, r *http.Request) {
 	// 限制post类型
-	if r.Method != "POST" {
-		w.WriteHeader(http.StatusInternalServerError)
-		return
-	}
+	// if r.Method != "POST" {
+	// 	w.WriteHeader(http.StatusInternalServerError)
+	// 	return
+	// }
 	result := response.Common{
 		Code:    1,
 		Message: "login",
 	}
-	// 将数据json化，返回json格式的数据
-	res, err := json.Marshal(result)
-	if err != nil {
-		return
-	}
-	w.Write(res)
+	response.SetResponseJsonWrite(w, result)
 }
+
+func fileHandle(w http.ResponseWriter, r *http.Request) {
+	path := "." + r.URL.Path
+	fmt.Println("path = ", path)
+
+	f, err := os.Open(path)
+	if err != nil {
+		result := response.Common{
+			Code:    -1,
+			Message: err.Error(),
+		}
+		// 将数据json化，返回json格式的数据
+		res, err := json.Marshal(result)
+		if err != nil {
+			return
+		}
+		w.Write(res)
+	}
+
+	defer f.Close()
+
+}
+
 func main() {
 	http.HandleFunc("/login", login)
+
+	http.HandleFunc("/fileRes/", fileHandle)
+
 	http.ListenAndServe(":9091", nil)
 }

@@ -82,10 +82,15 @@ func fileHandle(w http.ResponseWriter, r *http.Request) {
 
 }
 
+func uploadFile(w http.ResponseWriter, r *http.Request) {
+}
+
 func main() {
 	http.HandleFunc("/login", login)
 
 	http.HandleFunc("/fileRes/", fileHandle)
+
+	http.HandleFunc("/upload", uploadFile)
 
 	http.ListenAndServe(":9091", nil)
 }

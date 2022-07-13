@@ -2,17 +2,26 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
+	"tool/readnote/common"
 	"tool/readnote/config"
+	"tool/readnote/mysql"
+	"tool/readnote/repository"
 	"tool/readnote/response"
 )
 
 func init() {
 	config.LoadConfig("./config/config.toml")
 
-	// mysqlTest := config.Conf.Mysql["test"]
-	// testDB := mysql.New(mysqlTest.Host, mysqlTest.Port, mysqlTest.UserName, mysqlTest.Password, "test")
-	// testDB.Execx("./sql/file.sql")
+	mysqlTest := config.Conf.Mysql["test"]
+	common.Test_DB = mysql.New(mysqlTest.Host, mysqlTest.Port, mysqlTest.UserName, mysqlTest.Password, "test")
+	result, err := repository.SearchFileByNo("12345678")
+	if err != nil {
+		fmt.Println(err.Error())
+	} else {
+		fmt.Printf("%+v \n", result)
+	}
 }
 
 func login(w http.ResponseWriter, r *http.Request) {

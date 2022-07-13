@@ -1,7 +1,10 @@
 package api
 
 import (
+	"fmt"
+	"tool/readnote/common"
 	"tool/readnote/module"
+	"tool/readnote/repository"
 )
 
 func CreateNoteSingle(req *module.Note) error {
@@ -13,7 +16,15 @@ func CreateNoteSingle(req *module.Note) error {
 		data["content"] = req.Content
 	}
 
-	// if req.Content
+	if req.FileNo != "" {
+		fileObj, err := repository.SearchFileByNo(req.FileNo)
+		if err != nil {
+			return err
+		}
+		if fileObj.Id == 0 {
+			return fmt.Errorf(common.ErrParamEmpty, "FileNo")
+		}
+	}
 
 	return nil
 }

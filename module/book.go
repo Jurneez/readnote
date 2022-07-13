@@ -14,6 +14,7 @@ func (d DicTag) TableName() string {
 type File struct {
 	Id         uint   `db:"id"`
 	Order      uint   `db:"order"`
+	No         string `db:"No"` // 文件编号
 	Name       string `db:"name"`
 	Ftype      string `db:"ftype"`
 	Content    string `db:"content"`
@@ -31,7 +32,7 @@ func (f File) TableName() string {
 type MapFileTag struct {
 	Id         uint   `db:"id"`
 	TagId      uint   `db:"tag_id"`
-	FileId     uint   `db:"file_id"`
+	FileNo     uint   `db:"file_no"`
 	Status     uint   `db:"status"` // 0-添加 1-删除
 	CreateTime string `db:"create_time"`
 }
@@ -45,7 +46,7 @@ type Note struct {
 	OriginC    string `db:"origin_c"`    // 源文件的内容
 	Content    string `db:"content"`     // 笔记内容
 	Status     uint   `db:"status"`      // 0-添加 1-删除
-	FileId     uint   `db:"file_id"`     // 笔记归属的文件ID
+	FileNo     string `db:"file_no"`     // 笔记归属的文件的编号
 	OrderId    uint   `db:"order_id"`    // 笔记的顺序，返回数据的时候按照orderId排序，会变
 	CreateTime string `db:"create_time"` // 笔记时间
 	UpdateTime string `db:"update_time"` // 笔记修改时间

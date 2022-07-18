@@ -10,12 +10,11 @@ import (
 	"path/filepath"
 	"strconv"
 	"tool/readnote/common"
-	"tool/readnote/config"
 	"tool/readnote/response"
 )
 
 func init() {
-	config.LoadConfig("./config/config.toml")
+	// config.LoadConfig("./config/config.toml")
 
 	// mysqlTest := config.Conf.Mysql["test"]
 	// common.Test_DB = mysql.New(mysqlTest.Host, mysqlTest.Port, mysqlTest.UserName, mysqlTest.Password, "test")
@@ -116,7 +115,8 @@ func uploadFile(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("upload file sucess")
 
 		// into read-page
-		url := fmt.Sprintf("/file_resource/%s", handler.Filename)
+		// url := fmt.Sprintf("/file_resource/%s", handler.Filename)
+		url := "/read"
 		http.Redirect(w, r, url, http.StatusFound)
 	} else {
 		response.SetResponseJsonWrite(w, response.Common{
@@ -126,8 +126,13 @@ func uploadFile(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func index(w http.ResponseWriter, r *http.Request) {
+func upload(w http.ResponseWriter, r *http.Request) {
 	t, _ := template.ParseFiles("./page/upload.html")
+	t.Execute(w, nil)
+}
+
+func read(w http.ResponseWriter, r *http.Request) {
+	t, _ := template.ParseFiles("./page/read.html")
 	t.Execute(w, nil)
 }
 
@@ -136,9 +141,10 @@ func main() {
 
 	http.HandleFunc("/file_resource/", fileHandle)
 
-	http.HandleFunc("/upload", uploadFile)
+	http.HandleFunc("/uploadFile", uploadFile)
+	http.HandleFunc("/read", read)
 
-	http.HandleFunc("/", index)
+	http.HandleFunc("/", upload)
 
 	http.ListenAndServe(":9091", nil)
 }
